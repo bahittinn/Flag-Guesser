@@ -8,7 +8,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet weak var button1: UIButton!
     @IBOutlet weak var button2: UIButton!
     @IBOutlet weak var button3: UIButton!
@@ -30,7 +30,7 @@ class ViewController: UIViewController {
         countries += ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
         askQuestion()
     }
-    func askQuestion() {
+    func askQuestion(action: UIAlertAction! = nil) {
         
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
@@ -41,6 +41,21 @@ class ViewController: UIViewController {
         button2.setImage(UIImage(named: countries[1]), for: .normal)
         button3.setImage(UIImage(named: countries[2]), for: .normal)
     }
-
+    
+    @IBAction func buttonTapped(_ sender: UIButton) {
+        if sender.tag == correctAnswer {
+            print("correct")
+            score += 1
+        }else {
+            print("false")
+            if score != 0 {
+                score -= 1
+            }
+        }
+        let ac = UIAlertController(title: title, message: "Your score is \(score).", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
+        present(ac, animated: true)
+    }
+    
 }
 
